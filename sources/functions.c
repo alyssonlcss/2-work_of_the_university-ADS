@@ -3,6 +3,99 @@
 #include <stdlib.h>
 #include "../headers/functions.h"
 
+int rotate1I(Node ***pt, int h) {
+    Node *ptu = (**pt)->left;
+
+    if(ptu->bal == -1) {
+        (**pt)->left = ptu->right;
+        ptu->right = (**pt);
+        (**pt) = ptu;
+        ptu->right->bal = 0;
+    }
+    else {
+        Node *ptv = ptu->right;
+        ptu->right = ptv->left;
+        ptv->left = ptu;
+        (**pt)->left = ptv->right;
+        ptv->right = (**pt);
+        if(ptv->bal == 1) {
+            (**pt)->bal = 0;
+            ptu->bal = -1;
+        }
+        else {
+            (**pt)->bal = 1;
+            ptu->bal = 0;
+        }
+        (**pt) = ptv;
+    }
+    (**pt)->bal = 0; h = 0;
+    return h;
+}
+
+//implementar de forma análoga ao rotate1
+int rotate2I(Node ***pt, int *h) {
+    
+
+    return h;
+}
+
+
+
+void removeAVL(int x, Node **pt, int *h) {
+    if((*pt) == NULL){
+        puts("element does not exist!");
+        *h = 0;
+    }
+    else {
+        if(x < (*pt)->key) {
+            removeAVL(x, (*pt)->left, &h);
+            balance((*pt), "L", &h);
+        }
+        else {
+            if(x > (*pt)->key) {
+                removeAVL(x, (*pt)->right, &h);
+                balance((*pt), "R", &h);
+            }
+            else {
+                Node *aux = (*pt);
+                
+                if((*pt)->left == NULL) {
+                    (*pt) = (*pt)->right;
+                    h = 1;
+                }
+                else {
+                    if((*pt)->right == NULL) {
+                        (*pt) = (*pt)->left;
+                        h = 1;
+                    }
+                    else {
+                        Node *s = (*pt)->right;
+
+                        if(s->left == NULL) {
+                            s->left = (*pt)->left;
+                            s->bal = (*pt)->bal;
+                            (*pt) = s;
+                            h = 1;
+                        }
+                        else {
+                            Node *dadS;
+                            while(s->left != NULL) {
+                                dadS = s;
+                                s = s->left;
+                            }
+                            aux = dadS;
+                            dadS = (*pt);
+                            (*pt) = aux;
+                            removeAVL(x, (*pt)->right, &h);
+                        }
+                        balance((*pt), "R", &h);
+                    }
+                }
+            }
+        }
+    }
+}
+
 int insertAVL(int inKey, Node **pt, int h) {
 
     if(*pt == NULL) {
@@ -31,7 +124,7 @@ int insertAVL(int inKey, Node **pt, int h) {
                         (*pt)->bal = -1;
                         break;
                     case -1:
-                        h = rotate1(&pt, h);
+                        h = rotate1I(&pt, h);
                         break;
                 }
             }
@@ -48,7 +141,7 @@ int insertAVL(int inKey, Node **pt, int h) {
                         (*pt)->bal = 1;
                         break;
                     case -1:
-                        h = rotate2(&pt, h);
+                        h = rotate2I(&pt, h);
                         break;
                 }
             }
