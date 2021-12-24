@@ -21,21 +21,5 @@ int main() {
         freeAVL(&root);
         free(vec);
     }
-    
-
-    /* if(root != NULL) {
-        outputAVL(root);
-        printf("CheckAVL: %d\n", checkAVL(root));
-        printf("HeightAVL: %d\n", height(root));
-        countNodes(root, &sum);
-        printf("CountNodes: %d\n", sum);
-    }
-    else {
-        puts("Non-existent tree!");
-    } */
-
-
-
-
     return 0;
 }
