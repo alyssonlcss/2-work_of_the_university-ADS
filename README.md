@@ -3,7 +3,7 @@
 - Student: Alysson Pinheiro.
 - Federal University of Ceara - Campus Russas.
 
-![Screenshot](img/banner.png)
+![Screenshot](cover.png)
 
 ### Description
 First work in the Advanced Data Structures discipline.
