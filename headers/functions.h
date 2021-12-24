@@ -1,6 +1,10 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+#define K 1000
+#define _10K 10000
+#define _100K 100000
+
 struct node {
     int key;
     int bal;
@@ -22,6 +26,10 @@ int height(Node *pt);
 int checkAVL(Node *pt);
 void countNodes(Node *pt, int *sum);
 void outputAVL(Node *pt);
+void freeAVLrec(Node *pt);
+void freeAVL(Node **pt);
+void paInVec(int *vec, int seed);
+void tests(Node **pt, int *vec, int *sum, int *h);
 
 
 #endif

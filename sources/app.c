@@ -1,31 +1,36 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "../headers/functions.h"
 
 int main() {
-    int i, list[] = {20,18,14,12,10,1,24,26,30,32};
-    int tam = sizeof(list)/sizeof(list[0]);
-    int h, sum = 0;
-    Node *root = NULL;
+    int i, j;
+    srand(time(NULL));
+    for (i = 0; i < 10; i++) {
+        Node *root = NULL;
+        int h, sum = 0, *vec = (int*)malloc(sizeof(int)*_10K);
+        paInVec(vec, (rand() % 100)+1);
+        for(j = 0; j < _10K; j++) {
+            insertAVL(vec[j], &root, &h);
+        }
+        printf("%d. AVL Tree\n", i);
+        tests(&root, vec, &sum, &h);
+        freeAVL(&root);
+        free(vec);
+    }
     
-    for (i = 0; i < tam; i++)
-        insertAVL(list[i], &root, &h);
 
-    for (i = 5; i < tam; i++)
-        removeAVL(list[i], &root, &h);
-
-    if(root != NULL) {
+    /* if(root != NULL) {
         outputAVL(root);
         printf("CheckAVL: %d\n", checkAVL(root));
         printf("HeightAVL: %d\n", height(root));
         countNodes(root, &sum);
-        printf("CountNodes: %d", sum);
-        puts("");
+        printf("CountNodes: %d\n", sum);
     }
     else {
         puts("Non-existent tree!");
-    }
+    } */
 
 
 

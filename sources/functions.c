@@ -18,16 +18,15 @@ void rotate1I(Node **pt, int *h) {
         ptv->left = ptu;
         (*pt)->left = ptv->right;
         ptv->right = (*pt);
-        if(ptv->bal == 1) {
+
+        if(ptv->bal == 1)
             ptu->bal = -1;
-        }
         else if(ptv->bal == -1) {
             (*pt)->bal = 1;
             ptu->bal = 0;
         }
-        else {
+        else
             ptu->bal = 0;
-        }
         (*pt)->bal = 0;
         (*pt) = ptv;
     }
@@ -69,7 +68,7 @@ void rotate2I(Node **pt, int *h) {
 
 
 void insertAVL(int inKey, Node **pt, int *h) {
-
+    
     if(*pt == NULL) {
         Node *new = (Node*)malloc(sizeof(Node));
         new->key = inKey;
@@ -82,7 +81,7 @@ void insertAVL(int inKey, Node **pt, int *h) {
     else {
         if((*pt)->key == inKey) {
             puts("Found element!");
-            exit(1);
+            return;
         }
         else if(inKey < (*pt)->key) {
             insertAVL(inKey, &(*pt)->left, h);
@@ -191,34 +190,17 @@ void rotate2R(Node **pt, int *h) {
     }
 }
 
- void swap(Node **a, Node **b) {
-    Node *aux;
-    int temp;
+ void swap(Node **pt, Node **dadS) {
+    Node *temp;
 
-    aux = (*b);
-    (*b) = (*a);
-    (*a) = aux;
-
-    aux = (*b)->left;
-    (*b)->left = (*a)->left;
-    (*a)->left = aux;
-    
-    aux = (*b)->right;
-    (*b)->right = (*a)->right;
-    (*a)->right = aux;
-
-    temp = (*b)->bal;
-    (*b)->bal = (*a)->bal;
-    (*a)->bal = temp;
-    /*
-    aux = (*pt);
+    temp = (*pt);
     (*pt) = (*dadS);
-    (*dadS) = aux;
+    (*dadS) = temp;
 
-    aux->bal = (*pt)->bal;
-    aux->key = (*pt)->key;
-    aux->left = (*pt)->left;
-    aux->right = (*pt)->right;
+    temp->bal = (*pt)->bal;
+    temp->key = (*pt)->key;
+    temp->left = (*pt)->left;
+    temp->right = (*pt)->right;
 
     //swap
     (*pt)->bal = (*dadS)->bal;
@@ -226,11 +208,11 @@ void rotate2R(Node **pt, int *h) {
     (*pt)->left = (*dadS)->left;
     (*pt)->right = (*dadS)->right;
 
-    (*dadS)->bal = aux->bal;
-    (*dadS)->key = aux->key;
-    (*dadS)->left = aux->left;
-    (*dadS)->right = aux->right;
-    */
+    (*dadS)->bal = temp->bal;
+    (*dadS)->key = temp->key;
+    (*dadS)->left = temp->left;
+    (*dadS)->right = temp->right;
+
 }
 
 void balance(Node **pt, char where, int *h) {
@@ -333,8 +315,6 @@ int checkAVL(Node *pt) {
     if(pt->right != NULL) {
         flag = checkAVL(pt->right);
     }
-
-
     hl = height(pt->left);
     hr = height(pt->right);
 
@@ -355,13 +335,51 @@ void countNodes(Node *pt, int *sum) {
 }
 
 void outputAVL(Node *pt) {
-    //printf("%d (%d);\n", pt->key, pt->bal);
-    /* if((*pt)->key == 17)
-        printf("\n#Test: %d\n", (*pt)->right->key); */
+    printf("%d (%d);\n", pt->key, pt->bal);
     if(pt->left != NULL)
         outputAVL(pt->left);
-        printf("%d (%d);\n", pt->key, pt->bal);
+    //printf("%d (%d);\n", pt->key, pt->bal);
     if(pt->right != NULL)   
         outputAVL(pt->right);
     /* printf("%d (%d);\n", pt->key, pt->bal); */
+}
+
+void freeAVLrec(Node *pt) {
+    if(pt->left != NULL)
+        free(pt->left);
+    if(pt->right != NULL)
+        free(pt->right);
+
+    free(pt);
+}
+
+void freeAVL(Node **pt) {
+    freeAVLrec(*pt);
+
+    *pt = NULL;
+}
+
+void paInVec(int *vec, int seed) {
+    int i, j;
+    for(i = 0, j = 0; i < _10K; i++, j+=seed) {
+        vec[i] = j;
+    }
+}
+
+void tests(Node **pt, int *vec, int *sum, int *h) {
+    int i;
+
+    countNodes(*pt, sum);
+    printf("\tNumber of Nodes: %d\n",*sum);
+    if(checkAVL(*pt)) printf("\tIt's AVL!\n");
+    else printf("\tIt's not AVL!");
+    for(i = 0; i < K; i++) {
+        removeAVL(vec[i], &(*pt), h);
+    }
+    *sum = 0;
+    countNodes(*pt, sum);
+    printf("\tNumber of Nodes: %d\n",*sum);
+    if(checkAVL(*pt)) printf("\tIt's AVL!\n");
+    else printf("\tIt's not AVL!");
+
 }
