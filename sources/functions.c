@@ -344,19 +344,13 @@ void outputAVL(Node *pt) {
     /* printf("%d (%d);\n", pt->key, pt->bal); */
 }
 
-void freeAVLrec(Node *pt) {
-    if(pt->left != NULL)
-        free(pt->left);
-    if(pt->right != NULL)
-        free(pt->right);
-
-    free(pt);
-}
-
 void freeAVL(Node **pt) {
-    freeAVLrec(*pt);
+    if((*pt)->left != NULL)
+        freeAVL(&(*pt)->left);
+    if((*pt)->right != NULL)
+        freeAVL(&(*pt)->right);
 
-    *pt = NULL;
+    free(*pt);
 }
 
 void paInVec(int *vec, int seed) {
@@ -371,8 +365,10 @@ void tests(Node **pt, int *vec, int *sum, int *h) {
 
     countNodes(*pt, sum);
     printf("\tNumber of Nodes: %d\n",*sum);
-    if(checkAVL(*pt)) printf("\tIt's AVL!\n");
-    else printf("\tIt's not AVL!");
+    if(checkAVL(*pt)) puts("\tIt's AVL!");
+    else puts("\tIt's not AVL!");
+
+    puts("\t1000 nodes removed.");
     for(i = 0; i < K; i++) {
         removeAVL(vec[i], &(*pt), h);
     }

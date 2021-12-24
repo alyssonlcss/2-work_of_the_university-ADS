@@ -26,7 +26,6 @@ int height(Node *pt);
 int checkAVL(Node *pt);
 void countNodes(Node *pt, int *sum);
 void outputAVL(Node *pt);
-void freeAVLrec(Node *pt);
 void freeAVL(Node **pt);
 void paInVec(int *vec, int seed);
 void tests(Node **pt, int *vec, int *sum, int *h);
