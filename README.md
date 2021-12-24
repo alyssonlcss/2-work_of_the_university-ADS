@@ -1,4 +1,4 @@
-# 2-Work of the university - Advanced Data Structures
+# 2nd Work of the university - Advanced Data Structures
 - Discipline - Advanced Data Structures
 - Student: Alysson Pinheiro.
 - Federal University of Ceara - Campus Russas.
