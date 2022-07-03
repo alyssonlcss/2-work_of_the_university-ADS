@@ -10,7 +10,7 @@ First work in the Advanced Data Structures discipline.
 
 The work consists:
 
-[Access](https://github.com/alyssonlcss/EDA-Trabalho1-Parte2.pdf)
+[Access](https://github.com/alyssonlcss/AVL-Tree/blob/main/EDA-Trabalho1-Parte2.pdf)
 
 
 ## Questions and files
